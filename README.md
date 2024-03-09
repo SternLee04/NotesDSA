@@ -1,2 +1,2 @@
-# NotesDSA
-Less simple and less readable.
+# DSA Notes && Codes
+## *Less simple and less readable.*
