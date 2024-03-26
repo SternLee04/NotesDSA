@@ -1,18 +1,14 @@
 import java.util.*;
 
 /**
- * bst == root.left < root < root.right
- * inorder of BST is sorted order.
- * BST timecomplexity : O(H) -> O(log n) < O(H) < O(N)
- * O(log N) == in balance tree.
- * O(N) == in skew tree.
+ * Simple Approch : if inorder is sorted then valid otherwise not;
+ * Better Approch : each value in left subtree < Parent < each value in right subtree.
  */
-public class Create {
+public class Valid {
     static class Node {
         int data;
         Node left;
         Node right;
-
         public Node(int data) {
             this.data = data;
             this.left = null;
@@ -26,21 +22,32 @@ public class Create {
                 root = new Node(val);
                 return root;
             }
-
             if (root.data > val) {
                 root.left = insert(root.left, val);
             } else if (root.data < val) {
                 root.right = insert(root.right, val);
             }
-
             return root;
         }
-
         Node create(int[] nodes, Node root) {
             for (int i = 0; i < nodes.length; i++) {
                 root = insert(root, nodes[i]);
             }
             return root;
+        }
+
+        boolean isValidBST(Node root, Node min, Node max) {
+            if (root == null) {
+                return true;
+            }
+            
+            // check that node is in range.
+            if (min != null && root.data <= min.data) return false;
+            else if (max != null && max.data >= max.data) return false;
+
+            // for left subtree parentroot node is max
+            return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+            // for right subtree parentroot node is min
         }
     }
 
