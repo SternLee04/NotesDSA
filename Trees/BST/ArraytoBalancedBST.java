@@ -1,23 +1,21 @@
 import java.util.*;
-
 /**
- * Simple Approch : if inorder is sorted then valid otherwise not;
- * Better Approch : each value in left subtree < Parent < each value in right
- * subtree.
+ * Approch : 
+ * binary search on array mid == root.
+ * left part of array is left subtree
+ * right part of array is right subtree
  */
-public class Valid {
+public class ArraytoBalancedBST {
     static class Node {
         int data;
         Node left;
         Node right;
-
         public Node(int data) {
             this.data = data;
             this.left = null;
             this.right = null;
         }
     }
-
     static class BT {
         Node insert(Node root, int val) {
             if (root == null) {
@@ -38,27 +36,25 @@ public class Valid {
             return root;
         }
 
-        boolean isValidBST(Node root, Node min, Node max) {
-            if (root == null) {
-                return true;
-            }
+        Node sortedArrayToBalancedBst(int[] nodes, int left, int right) {// O(n)
+            if (left > right) return null;
 
-            // check that node is in range.
-            if (min != null && root.data <= min.data)
-                return false;
-            else if (max != null && root.data >= max.data)
-                return false;
+            int mid = left + (right - left) / 2;
 
-            // for left subtree parentroot node is max
-            return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
-            // for right subtree parentroot node is min
+            Node root = new Node(nodes[mid]);
+            root.left = sortedArrayToBalancedBst(nodes, left, mid-1);
+            root.right = sortedArrayToBalancedBst(nodes, mid+1, right);
+
+            return root;
         }
     }
-
     public static void main(String[] args) {
         int nodes[] = { 8, 5, 3, 6, 10, 11, 14 };
         Node root = null;
         BT tree = new BT();
         root = tree.create(nodes, root);
+
+        Arrays.sort(nodes);
+        Node balancedBst = tree.sortedArrayToBalancedBst(nodes, 0, nodes.length-1);
     }
 }

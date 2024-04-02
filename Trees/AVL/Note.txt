@@ -1,0 +1,36 @@
+Interview perspective AVL is not so IMP.
+Concept and understand is required for Rare case.
+In Interview question and theory may ask but not Implementation AVL in term of code.
+
+Theory :
+
+AVL == Selfbalancing BST (internal Implementation is make it possible).
+
+Insert, remove and serach == O(H)
+AVL can be skewed too : ex. { 1, 2, 3, 4} 
+
+Balance factor : Height of left subtree - Height of right subtree == -1, 0 , 1 ;
+= |HL - HR| < 2
+
+make AVL tree :
+
+1. bfactor is violated
+2. case
+3. rotation
+
+examples :
+
+state order 30 20 10
+make bst :
+        30
+    20
+10
+figurout where bfactor is volated (30, 2)
+where the new node is added its 10 in left subtree.
+so case is LL case -> Right rotate.
+give right rotate :
+         20
+    10        30
+
+same when RR case -> left rotate.
+
