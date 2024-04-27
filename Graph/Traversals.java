@@ -3,13 +3,12 @@ import java.util.*;
  * Traversals : BFS and DFS T(V+E)
  * 
  * BFS :
- *      1. goto immediately neighbors first.
- *      2. print node and put D.S that holds visited nodes (as cycles are there in graph.)
+ *      1. print node and goto neighbors first.
+ *      2. put D.S that holds visited nodes (as cycles are there in graph.)
  *      3. put in neighbors in queue.
  * DFS :
- *      1. goto first neighbor.
- *      2. print node and put D.S that holds visited nodes
- *      3. then move to next neighbor and print if not visited.
+ *      1. goto immediate neighbor first by iterating all edges.
+ *      2  call for next neighbor if it's not visited.
  */
 
 public class Traversals {

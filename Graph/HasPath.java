@@ -17,17 +17,18 @@ public class HasPath {
             this.graph[i] = new ArrayList<>();
         }
     }
-    boolean hasPath(int start, int end, boolean[] visited) {
+    boolean hasPath(int start, int end, boolean[] visited) {// O(V + E) dfs 
         if (start == end) return true;
         
         visited[start] = true;
-        for (int i = 0; i < this.graph[start].size(); i++) {
-            Edge edge = this.graph[start].get(i);
+
+        for (int i = 0; i < graph[start].size(); i++) {
+            Edge edge = graph[start].get(i);
             if (!visited[edge.dst] && hasPath(edge.dst, end, visited)) {
                 return true;
             }
         }
-        return false;
+        return false; 
     }
     public static void main(String[] args) {
         HasPath g = new HasPath();
