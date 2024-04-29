@@ -27,6 +27,11 @@ import java.util.*;
  * parent -> leftChild : 2 * pareent +1 
  * parent -> rightChild : 2 * pareent +2 
  * children -> parent : (children-1)/2
+ * 
+ * when root is nat at 0 index then (starting index 1)
+ * leftChild -> 2 * i
+ * rightChild -> 2 * i +1
+ * parent = i/2
  */
 public class ImplementHeap {
 
