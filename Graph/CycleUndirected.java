@@ -32,7 +32,7 @@ public class CycleUndirected {
         }
     }
 
-    boolean detection() {
+    boolean detection() {// O(V + E)
         boolean[] visited = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
             if (!visited[i]) {
@@ -49,7 +49,7 @@ public class CycleUndirected {
             Edge e = graph[current].get(i);
             // case 3
             if (!visited[e.dst]) {
-                if(detectCycle(visited, e.dst, current))
+                if(detectCycle(visited, e.dst, current))// neighbour told you there is cycle.
                     return true;
             }
             // case 1
@@ -86,6 +86,7 @@ public class CycleUndirected {
 // ex. 0 - 1 - 2 cycle
 //         | /
 //         3
+//
 // ex. 0 - 1 - 2 not cycle
 //         | 
 //         3  

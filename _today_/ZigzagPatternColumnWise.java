@@ -1,4 +1,3 @@
-
 public class ZigzagPatternColumnWise {
     public static void printWavePatternColumnWise(int n) {
         int num = 0;
@@ -25,7 +24,7 @@ public class ZigzagPatternColumnWise {
     }
 
     public static void main(String[] args) {
-        int n = 5; // Change the value of n as needed
+        int n = 1; // Change the value of n as needed
         printWavePatternColumnWise(n);
     }
 }

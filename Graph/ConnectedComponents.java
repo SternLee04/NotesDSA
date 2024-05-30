@@ -34,21 +34,23 @@ public class ConnectedComponents {
     void dfs() {
         boolean[] visited = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
-            dfsutil(i, visited);
+            if (!visited[i]) {
+                dfsutil(i, visited);
+            }
         }
     }
     public void dfsutil(int curr, boolean[] visited) {
 
-            System.out.print(curr + " ");
-            visited[curr] = true;
- 
-            for (int i = 0; i < graph[curr].size(); i++) {
-                Edge e = graph[curr].get(i);
-                if (!visited[e.dst]) {
-                    dfsutil(e.dst, visited);
-                }
+        System.out.print(curr + " ");
+        visited[curr] = true;
+
+        for (int i = 0; i < graph[curr].size(); i++) {
+            Edge e = graph[curr].get(i);
+            if (!visited[e.dst]) {
+                dfsutil(e.dst, visited);
             }
         }
+    }
     
     void bfs() {
         boolean[] visited = new boolean[graph.length];
@@ -59,22 +61,22 @@ public class ConnectedComponents {
         }
     }
     public void bfsutil(boolean[] visited) {
-            Queue<Integer> q = new LinkedList<>();
+        Queue<Integer> q = new LinkedList<>();
 
-            q.add(0);
-            visited[0] = true;
-            while (!q.isEmpty()) {
-                int curr = q.remove();
-                System.out.print(curr + " ");
+        q.add(0);
+        visited[0] = true;
+        while (!q.isEmpty()) {
+            int curr = q.remove();
+            System.out.print(curr + " ");
 
-                for (Edge e : graph[curr]) {
-                    if (!visited[e.dst]) {
-                        q.add(e.dst);
-                        visited[e.dst] = true;
-                    }
+            for (Edge e : graph[curr]) {
+                if (!visited[e.dst]) {
+                    q.add(e.dst);
+                    visited[e.dst] = true;
                 }
             }
         }
+    }
     public static void main(String[] args) {
         ConnectedComponents g = new ConnectedComponents();
         g.create(6);

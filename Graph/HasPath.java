@@ -1,3 +1,9 @@
+/**
+ * simple logic you can go to one place to another if you have path. So its only possible in connected commponents.
+ * 
+ * dfs approch what if nabours told you that i know the path then.
+ * bfs start with starting node(src) and traverse all nebours when u reach end(dst) that mean it mean there is a paht.
+ */
 import java.util.*;
 public class HasPath {
 
@@ -29,6 +35,24 @@ public class HasPath {
             }
         }
         return false; 
+    }
+    public boolean hasPath(int src, int dst) {// O(V + E) bfs
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[graph.length];
+
+        q.add(src);
+        visited[src] = true;
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            if (node == dst) return true;
+            for (Edge edge : graph[node]) {
+                if (!visited[edge.dst]) {
+                    q.add(edge.dst);
+                    visited[edge.dst] = true;
+                }
+            }
+        }
+        return false;
     }
     public static void main(String[] args) {
         HasPath g = new HasPath();
