@@ -1,19 +1,19 @@
 import java.util.*;
+
 /**
- * bfs
+ * CSES_1_DistinctNumbers
  */
-public class C {
-    static long ans(int a, int b) {
-        
-    }
+public class CSES1DistinctNumbers {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         long n = sc.nextLong();
         
+        Set<Long> set = new HashSet<>();
         for (int i = 0; i < n; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            System.out.println(ans(a,b));
+            long x = sc.nextLong();
+            set.add(x);
         }
+        System.out.println(set.size());
     }
 }

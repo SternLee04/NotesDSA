@@ -15,13 +15,13 @@ public class CoinChange1 {
         if (n == 0) 
             return 0;
 
-        if (dp[n][payment] != 0) 
+        if (dp[n][payment] != -1) 
             return dp[n][payment];
         
         if (coins[n-1] <= payment) {
-            int inclucdeWays = coinchange(coins, payment-coins[n-1], n, dp);
+            int includeWays = coinchange(coins, payment-coins[n-1], n, dp);
             int excludeWays = coinchange(coins, payment, n-1, dp);
-            dp[n][payment] = inclucdeWays + excludeWays;
+            dp[n][payment] = includeWays + excludeWays;
         } else {
             int excludeWays = coinchange(coins, payment, n-1, dp);
             dp[n][payment] = excludeWays;
@@ -35,6 +35,11 @@ public class CoinChange1 {
 
         int n = coins.length;
         int[][] dp = new int[n+1][payment+1];
+        for (int i = 0; i < n+1; i++) {
+            for (int j = 0; j < payment+1; j++) {
+                dp[i][j] = -1;
+            }
+        }
 
         int ways = coinchange(coins, payment, n, dp);
         System.out.println(ways);
