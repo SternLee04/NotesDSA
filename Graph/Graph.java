@@ -1,12 +1,6 @@
 import java.util.*;
 public class Graph {
-    
-    private ArrayList<ArrayList<Edge>> graph;
 
-    Graph() {
-        this.graph = new ArrayList<>();
-    }
-    
     public static class Edge {
         int src, dest, wgt;
         Edge(int src, int dest, int wgt) {
@@ -16,6 +10,13 @@ public class Graph {
         }
     }
 
+    public ArrayList<ArrayList<Edge>> graph;
+
+    Graph() {
+        this.graph = new ArrayList<>();
+    }
+    
+
     void addEdge(int src, int dest, int wgt) {
         // ensure inner lists exist up to index src
         while (graph.size() <= src) {
@@ -23,10 +24,17 @@ public class Graph {
         }
         graph.get(src).add(new Edge(src, dest, wgt));
     }
-    
-    void bfs(int src) {
-        Queue<Integer> q = new LinkedList<>();
+
+    void connectedBfs() {
         boolean[] visited = new boolean[graph.size()];
+        for (int i = 0; i < visited.length; i++) {
+            if (visited[i] == false) {
+                bfs(i, visited);
+            }
+        }
+    }
+    void bfs(int src, boolean[] visited) {
+        Queue<Integer> q = new LinkedList<>();
 
         q.add(src);
         while (!q.isEmpty()) {
@@ -43,19 +51,29 @@ public class Graph {
             }
         }
     }
-
-    void dfs(int src, boolean[] visited) {
-        System.out.println(src);
-        visited[src] = true;
-
-        for (int i = 0; i < graph.get(src).size(); i++) {
-            Edge e = graph.get(src).get(i);
-            if (visited[e.dest] == false) {
-                dfs(e.dest, visited);
+    
+    void connectedDfs() {
+        boolean[] visited = new boolean[graph.size()];
+        for (int i = 0; i < visited.length; i++) {
+            if (visited[i] == false) {
+                dfs(i, visited);
             }
         }
     }
+    void dfs(int src, boolean[] visited) {
+        if (visited[src] == false) {   
+            System.out.println(src);
+            visited[src] = true;
     
+            for (int i = 0; i < graph.get(src).size(); i++) {
+                Edge e = graph.get(src).get(i);
+                if (visited[e.dest] == false) {
+                    dfs(e.dest, visited);
+                }
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         Graph graph = new Graph();
@@ -82,7 +100,7 @@ public class Graph {
 
         graph.addEdge(6, 5, 1);
 
-        graph.bfs(0);
-        graph.dfs(0, new boolean[graph.graph.size()]);
+        graph.connectedBfs();
+        graph.connectedDfs();
     }
 }
