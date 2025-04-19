@@ -1,82 +1,88 @@
 import java.util.*;
 public class Graph {
-    static class Edge{
-        int src;
-        int dest;
-        int wt;
-        public Edge(int s, int d, int w){
-            this.src = s;
-            this.dest = d;
-            this.wt = w;
-        }
+    
+    private ArrayList<ArrayList<Edge>> graph;
+
+    Graph() {
+        this.graph = new ArrayList<>();
     }
     
-    public static void bfs(ArrayList<Edge>[] graph, int V) {
-        Queue<Integer> queue = new LinkedList<>();// to keep track will want to traverse next node.
-        boolean[] visited = new boolean[V];// to keep track that same node not visit twice and fall under cycle.
-        
-        // queue.add(graph[0].get(0).src);
-        queue.add(0);
-        while (queue.isEmpty() == false) {
-            Integer currentNode = queue.poll();
-            if (visited[currentNode] == false) {
-                // print the node
-                System.out.print(currentNode + " ");
-                // mark current visted.
-                visited[currentNode] = true;
-                // add all neighbors to queue.
-                for (int i = 0; i < graph[currentNode].size(); i++) {
-                    Edge edge = graph[currentNode].get(i);
-                    queue.add(edge.dest);
+    public static class Edge {
+        int src, dest, wgt;
+        Edge(int src, int dest, int wgt) {
+            this.src = src;
+            this.dest = dest;
+            this.wgt = wgt;
+        }
+    }
+
+    void addEdge(int src, int dest, int wgt) {
+        // ensure inner lists exist up to index src
+        while (graph.size() <= src) {
+            graph.add(new ArrayList<>());
+        }
+        graph.get(src).add(new Edge(src, dest, wgt));
+    }
+    
+    void bfs(int src) {
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[graph.size()];
+
+        q.add(src);
+        while (!q.isEmpty()) {
+            Integer current = q.poll();
+            if (!visited[current]) {
+                System.out.println(current);
+                visited[current] = true;
+                for(int i = 0; i < graph.get(current).size() ; i++) {
+                    Edge e = graph.get(current).get(i);
+                    if (!visited[e.dest]) {
+                        q.add(e.dest);
+                    }
                 }
             }
         }
     }
 
-    public static void dfs(ArrayList<Edge>[] graph, int V, int currentNode, boolean[] visted) {
-        System.out.print(currentNode + " ");// print the node.
-        visted[currentNode] = true;// mark current visted.
+    void dfs(int src, boolean[] visited) {
+        System.out.println(src);
+        visited[src] = true;
 
-        for(int i = 0 ; i < graph[currentNode].size(); i++) {
-            Edge edge = graph[currentNode].get(i);
-            if (visted[edge.dest] == false) {
-                dfs(graph, V, edge.dest, visted);
+        for (int i = 0; i < graph.get(src).size(); i++) {
+            Edge e = graph.get(src).get(i);
+            if (visited[e.dest] == false) {
+                dfs(e.dest, visited);
             }
         }
     }
+    
 
     public static void main(String[] args) {
-        int V = 7;
-        @SuppressWarnings("unchecked")
-        ArrayList<Edge>[] graph = new ArrayList[V];
-        for(int i = 0; i<V; i++){
-            graph[i] = new ArrayList<>();
-        }
-        graph[0].add(new Edge(0, 1, 3));
-        graph[0].add(new Edge(0, 2, 3));
+        Graph graph = new Graph();
+        graph.addEdge(0, 1, 1);
+        graph.addEdge(0, 2, 1);
 
-        graph[1].add(new Edge(1, 0, 3));
-        graph[1].add(new Edge(1, 3, 3));
+        graph.addEdge(1, 0, 1);
+        graph.addEdge(1, 3, 3);
+
+        graph.addEdge(2, 0, 1);
+        graph.addEdge(2, 4, 0);
+
+        graph.addEdge(3, 1, 3);
+        graph.addEdge(3, 4, 1);
+        graph.addEdge(3, 5, 2);
+
+        graph.addEdge(4, 2, 0);
+        graph.addEdge(4, 3, 1);
+        graph.addEdge(4, 5, 1);
         
-        graph[2].add(new Edge(2, 0, 3));
-        graph[2].add(new Edge(2, 4, 3));
+        graph.addEdge(5, 3, 2);
+        graph.addEdge(5, 4, 1);
+        graph.addEdge(5, 6, 1);
 
-        graph[3].add(new Edge(3, 1, 3));
-        graph[3].add(new Edge(3, 4, 3));
-        graph[3].add(new Edge(3, 5, 3));
+        graph.addEdge(6, 5, 1);
 
-        graph[4].add(new Edge(4, 2,3));
-        graph[4].add(new Edge(4, 3, 3));
-        graph[4].add(new Edge(4, 5, 3));
-
-        graph[5].add(new Edge(5, 3, 3));
-        graph[5].add(new Edge(5, 4, 3));
-        graph[5].add(new Edge(5, 6, 3));
-
-        graph[6].add(new Edge(6, 5, 3));
-        
-        bfs(graph, V);
-        System.out.println();
-        dfs(graph, V, 0, new boolean[V]);
+        graph.bfs(0);
+        graph.dfs(0, new boolean[graph.graph.size()]);
     }
 }
