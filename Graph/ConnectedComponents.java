@@ -2,14 +2,14 @@ import java.util.*;
 public class ConnectedComponents extends Graph {
 
     public void componentsBfs() {
-        boolean[] visited = new boolean[getSize()];
+        boolean[] visited = new boolean[graph.size()];
         for (int i = 0; i < visited.length; i++) {
             bfs(i, visited);
         }
     }
 
     public void componentsDfs() {
-        boolean[] visited = new boolean[getSize()];
+        boolean[] visited = new boolean[graph.size()];
         for (int i = 0; i < visited.length; i++) {
             dfs(i, visited);
         }

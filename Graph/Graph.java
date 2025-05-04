@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Graph {
 
-    private ArrayList<ArrayList<Edge>> graph;
+    public ArrayList<ArrayList<Edge>> graph;
 
     public static class Edge {
         int src, dest, wgt;
@@ -18,13 +18,9 @@ public class Graph {
         this.graph = new ArrayList<>();
     }
 
-    public int getSize() {
-        return graph.size();
-    }
-
     void addEdge(int src, int dest, int wgt) {
         // ensure inner lists exist up to index src
-        while (graph.size() <= src) {
+        while (graph.size() <= Math.max(src, dest)) {
             graph.add(new ArrayList<>());
         }
         graph.get(src).add(new Edge(src, dest, wgt));
